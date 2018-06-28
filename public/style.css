@@ -19,3 +19,56 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+/* SECTION TITLE */
+
+.title {
+  text-align: left;
+}
+
+.title * {
+    font-size: 0.8em;
+    color: #f47f38;
+    font-family: monospace;
+}
+
+/* DEFINE JOB */
+
+.jobinfo-container {
+  display: flex;
+}
+
+.jobinfo-item-label {
+  width: 13%;
+  text-align: left;
+  margin: 5px 0;
+}
+
+.jobinfo-item-input {
+  margin: 0.5em;
+  border: 1px solid #dddddd;
+  text-align: left;
+}
+
+/* DEFINE TYPE */
+
+.fixtype-container {
+  display: flex;
+}
+
+.fixtype-item-container {
+  display: flex;
+  flex-direction: column;
+  width: 8em;
+}
+
+.fixtype-item-label {
+  text-align: left;
+  margin: 5px 0;
+}
+
+.fixtype-item-input {
+  margin: 0.5em 0;
+  border: 1px solid #dddddd;
+  text-align: left;
+}
