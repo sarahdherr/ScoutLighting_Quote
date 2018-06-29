@@ -7,8 +7,10 @@ import DefineRuns from './DefineRuns'
 const QuoteForm = (props) =>
   <div>
     <DefineJob />
-    <DefineType />
-    <DefineRuns />
+    <div className='fixture-type-container'>
+      <DefineType />
+      <DefineRuns />
+    </div>
   </div>
 
 export default QuoteForm

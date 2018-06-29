@@ -49,7 +49,7 @@ class DefineJob extends React.Component {
         </div>
         <div className='jobinfo-container'>
           <p className='jobinfo-item-label'>Job Type:</p>
-          <select className='jobinfo-item-input' name='type' value={this.state.type} onChange={this.handleChange} >
+          <select className='jobinfo-item-select' name='type' value={this.state.type} onChange={this.handleChange} >
             <option />
             <option>Hospitality</option>
             <option>Residential</option>

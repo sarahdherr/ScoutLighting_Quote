@@ -110,7 +110,7 @@ class DefineType extends React.Component {
             </select>
           </div>
         </div>
-        <p>Part #: {this.props.partNumber}</p>
+        <p className='partnumber-text'>Part #: {this.props.partNumber}</p>
         {/* <button onClick={() => this.props.handleSubmit(this.state)}>Send to database</button> */}
       </div>
     )
