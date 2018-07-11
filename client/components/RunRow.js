@@ -18,7 +18,6 @@ export default class RunRow extends React.Component {
   }
 
   handleChange (evt) {
-    evt.preventDefault()
     let stateObj = {}
     stateObj[evt.target.name] = Number(evt.target.value) * 1
     this.setState(stateObj)
@@ -86,11 +85,11 @@ export default class RunRow extends React.Component {
         <td className='channeltbl-body'>
           <input
             name='totalWatts'
-            className='channeltbl-body-input'
+            className='channeltbl-body-input channeltbl-totalWatts'
             value={this.totalWatts()} />
         </td>
-        <td className='channeltbl-body channeltbl-toggle'>
-          <label>
+        <td className='channeltbl-body'>
+          <label className='channeltbl-checkbox'>
             <input
               name='timmable'
               value={this.state.trimmable}
@@ -98,8 +97,8 @@ export default class RunRow extends React.Component {
               onChange={this.handleChange} />
           </label>
         </td>
-        <td className='channeltbl-body channeltbl-toggle'>
-          <label>
+        <td className='channeltbl-body'>
+          <label className='channeltbl-checkbox'>
             <input
               name='symmetrical'
               value={this.state.symmetrical}

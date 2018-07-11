@@ -14,6 +14,7 @@ class DefineJob extends React.Component {
       type: ''
     }
     this.handleChange = this.handleChange.bind(this)
+    this.onNextClick = this.onNextClick.bind(this)
   }
 
   handleChange (evt) {
@@ -23,9 +24,14 @@ class DefineJob extends React.Component {
     this.setState(tempObj)
   }
 
+  onNextClick(evt) {
+    this.props.handleClick(this.state)
+    this.props.handleNext()
+  }
+
   render () {
     return (
-      <div>
+      <div className='jobinfo-container-container'>
         <h1 className='title'><strong>DEFINE JOB</strong></h1>
         <div className='jobinfo-container'>
           <p className='jobinfo-item-label'>Name:</p>
@@ -56,7 +62,15 @@ class DefineJob extends React.Component {
             <option>Commercial</option>
           </select>
         </div>
-        <button onClick={() => this.props.handleClick(this.state)}>Next</button>
+        {
+          this.props.showNext
+            ?
+            (<div className='jobinfo-btn-container'>
+              <button className='jobinfo-btn' onClick={this.onNextClick}>Next</button>
+            </div>)
+            : null
+        }
+
         {/* <button onClick={() => this.props.handleSubmit(this.state)}>Send to database</button> */}
       </div>
     )

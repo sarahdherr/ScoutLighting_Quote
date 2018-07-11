@@ -41,7 +41,7 @@ export default class extends React.Component {
                     </tbody>
                 </table>
                 <div className="channeltbl-btn">
-                    <button className="channeltbl-add-btn" onClick={this.handleAddAnother}>+</button>
+                    <button className="channeltbl-add-btn" onClick={this.handleAddAnother}>Add Run</button>
                 </div>
             </div>
         )

@@ -4,6 +4,7 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
+const STOCK_NAME = 'STOCK_NAME'
 const STOCK_PREFIX = 'STOCK_PREFIX'
 const STOCK_CHANNEL = 'STOCK_CHANNEL'
 const STOCK_LENS = 'STOCK_LENS'
@@ -11,11 +12,13 @@ const STOCK_INTENSITY = 'STOCK_INTENSITY'
 const STOCK_CCT = 'STOCK_CCT'
 const STOCK_DIMMING = 'STOCK_DIMMING'
 const STOCK_COATING = 'STOCK_COATING'
+const STOCK_ANOTHER_FIXTURE = 'STOCK_ANOTHER_FIXTURE'
 
 /**
  * INITIAL STATE
  */
 const defaultFixture = {
+  fixtureName: '',
   prefix: 'SS',
   channel: '',
   lens: '',
@@ -26,71 +29,83 @@ const defaultFixture = {
   partNumber: ''
 }
 
+const defaultFixtures = {0: defaultFixture}
+
 /**
  * ACTION CREATORS
  */
-const stockPrefix = prefix => ({type: STOCK_PREFIX, prefix})
-const stockChannel = channel => ({type: STOCK_CHANNEL, channel})
-const stockLens = lens => ({type: STOCK_LENS, lens})
-const stockIntensity = intensity => ({type: STOCK_INTENSITY, intensity})
-const stockCct = cct => ({type: STOCK_CCT, cct})
-const stockDimming = dimming => ({type: STOCK_DIMMING, dimming})
-const stockCoating = coating => ({type: STOCK_COATING, coating})
+const stockName = (idx, fixtureName) => ({type: STOCK_NAME, idx, fixtureName})
+const stockPrefix = (idx, prefix) => ({type: STOCK_PREFIX, idx, prefix})
+const stockChannel = (idx, channel) => ({type: STOCK_CHANNEL, idx, channel})
+const stockLens = (idx, lens) => ({type: STOCK_LENS, idx, lens})
+const stockIntensity = (idx, intensity) => ({type: STOCK_INTENSITY, idx, intensity})
+const stockCct = (idx, cct) => ({type: STOCK_CCT, idx, cct})
+const stockDimming = (idx, dimming) => ({type: STOCK_DIMMING, idx, dimming})
+const stockCoating = (idx, coating) => ({type: STOCK_COATING, idx, coating})
+const stockAnotherFixture = (idx, fixture) => ({type: STOCK_ANOTHER_FIXTURE, idx, fixture})
 
 /**
  * THUNK CREATORS
  */
-export const setPrefix = (prefix) => async dispatch => {
+
+export const setName = (idx, fixtureName) => async dispatch => {
   try {
-    dispatch(stockPrefix(prefix))
+    dispatch(stockName(idx, fixtureName))
+  } catch (err) {
+    console.log(err)
+  }
+}
+export const setPrefix = (idx, prefix) => async dispatch => {
+  try {
+    dispatch(stockPrefix(idx, prefix))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const setChannel = (channel) => async dispatch => {
+export const setChannel = (idx, channel) => async dispatch => {
   try {
-    dispatch(stockChannel(channel))
+    dispatch(stockChannel(idx, channel))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const setLens = (lens) => async dispatch => {
+export const setLens = (idx, lens) => async dispatch => {
   try {
-    dispatch(stockLens(lens))
+    dispatch(stockLens(idx, lens))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const setIntensity = (intensity) => async dispatch => {
+export const setIntensity = (idx, intensity) => async dispatch => {
   try {
-    dispatch(stockIntensity(intensity))
+    dispatch(stockIntensity(idx, intensity))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const setCct = (cct) => async dispatch => {
+export const setCct = (idx, cct) => async dispatch => {
   try {
-    dispatch(stockCct(cct))
+    dispatch(stockCct(idx, cct))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const setDimming = (dimming) => async dispatch => {
+export const setDimming = (idx, dimming) => async dispatch => {
   try {
-    dispatch(stockDimming(dimming))
+    dispatch(stockDimming(idx, dimming))
   } catch (err) {
     console.log(err)
   }
 }
 
-export const setCoating = (coating) => async dispatch => {
+export const setCoating = (idx, coating) => async dispatch => {
   try {
-    dispatch(stockCoating(coating))
+    dispatch(stockCoating(idx, coating))
   } catch (err) {
     console.log(err)
   }
@@ -106,13 +121,33 @@ export const saveFixture = (fixture) => async dispatch => {
   }
 }
 
+export const addAnotherFixture = () => async dispatch => {
+  try {
+    var idx = 1 // todo: not hard code, use object.keys
+    let fix = {
+      fixtureName: '',
+      prefix: 'SS',
+      channel: '',
+      lens: '',
+      intensity: '',
+      cct: '',
+      dimming: '',
+      coating: '',
+      partNumber: ''
+    }
+    dispatch(stockAnotherFixture(idx, fix))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-const calculatePartNumber = (state) => {
-  let prefix = state.prefix
-  let channel = state.channel.split(' - ')[0]
-  let lens = state.lens.split(' - ')[0]
-  let intensity = Number(state.intensity)
-  let cct = state.cct.split(' - ')[0]
+
+const calculatePartNumber = (fixture) => {
+  let prefix = fixture.prefix
+  let channel = fixture.channel.split(' - ')[0]
+  let lens = fixture.lens.split(' - ')[0]
+  let intensity = Number(fixture.intensity)
+  let cct = fixture.cct.split(' - ')[0]
 
   let partNumber = `${prefix}${channel}${lens}${(intensity > 0) ? intensity : ''}${cct}`
   return partNumber
@@ -120,33 +155,47 @@ const calculatePartNumber = (state) => {
 /**
  * REDUCER
  */
-export default function (state = defaultFixture, action) {
+function getIdx(idx) {
+  return idx
+    ? idx
+    : 0
+}
+
+export default function (state = defaultFixtures, action) {
   var newState = Object.assign({}, state)
   switch (action.type) {
+    case STOCK_NAME:
+      newState[getIdx(action.idx)].fixtureName = action.fixtureName
+      break
     case STOCK_PREFIX:
-      newState.prefix = action.prefix
+      newState[getIdx(action.idx)].prefix = action.prefix
       break
     case STOCK_CHANNEL:
-      newState.channel = action.channel
+      newState[getIdx(action.idx)].channel = action.channel
       break
     case STOCK_LENS:
-      newState.lens = action.lens
+      newState[getIdx(action.idx)].lens = action.lens
       break
     case STOCK_INTENSITY:
-      newState.intensity = action.intensity
+      newState[getIdx(action.idx)].intensity = action.intensity
       break
     case STOCK_CCT:
-      newState.cct = action.cct
+      newState[getIdx(action.idx)].cct = action.cct
       break
     case STOCK_COATING:
-      newState.coating = action.coating
+      newState[getIdx(action.idx)].coating = action.coating
       break
     case STOCK_DIMMING:
-      newState.dimming = action.dimming
+      newState[getIdx(action.idx)].dimming = action.dimming
+      break
+    case STOCK_ANOTHER_FIXTURE:
+      newState[getIdx(action.idx)] = action.fixture
       break
     default:
       break
   }
-  newState.partNumber = calculatePartNumber(newState)
+
+  newState[getIdx(action.idx)].partNumber = calculatePartNumber(newState[getIdx(action.idx)])
+
   return newState
 }

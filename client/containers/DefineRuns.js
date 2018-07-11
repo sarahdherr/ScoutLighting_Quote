@@ -6,21 +6,22 @@ class DefineRuns extends React.Component {
   render () {
     return (
       <div>
-        <h1 className='title'><strong>DEFINE JOB</strong></h1>
+        <h1 className='title'><strong>DEFINE RUNS</strong></h1>
         <RunTable intensity={this.props.intensity} />
       </div>
     )
   }
 }
+
 const mapState = state => {
   return {
-    prefix: state.fixture.prefix,
-    channel: state.fixture.channel,
-    lens: state.fixture.lens,
-    intensity: state.fixture.intensity,
-    cct: state.fixture.cct,
-    coating: state.fixture.coating,
-    dimming: state.fixture.dimming
+    prefix: state.fixture[0].prefix,
+    channel: state.fixture[0].channel,
+    lens: state.fixture[0].lens,
+    intensity: state.fixture[0].intensity,
+    cct: state.fixture[0].cct,
+    coating: state.fixture[0].coating,
+    dimming: state.fixture[0].dimming
   }
 }
 

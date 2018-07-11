@@ -28,11 +28,14 @@ form div {
 
 .title * {
   font-size: 0.8em;
-  color: #f47f38;
+  color: orange;
   font-family: monospace;
 }
 
 /* DEFINE JOB */
+.jobinfo-container-container {
+  margin-left: 1.5em;
+}
 
 .jobinfo-container {
   display: flex;
@@ -42,6 +45,8 @@ form div {
   width: 13%;
   text-align: left;
   margin: 5px 0;
+  font-weight: lighter;
+  color: #797979;
 }
 
 .jobinfo-item-input {
@@ -60,20 +65,66 @@ form div {
   width: 12em;
 }
 
+.jobinfo-btn-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.jobinfo-btn {
+  height: 2em;
+  width: 5em;
+  border: none;
+  background-color: orange;
+  border-radius: 5px;
+  margin-right: 10%;
+  color: #404040;
+  font-size: 0.8em;
+  font-weight: lighter;
+}
+
 /* DEFINE TYPE */
+.define-fixtype-container {
+  margin-top: -2.5em;
+}
+
 .fixture-type-container {
   margin-top: 0.5em;
-  border: 1px solid #f47f38;
+  border: 1px solid orange;
   border-radius: 10px;
   padding: 0 1em;
   padding-bottom: 1em;
 }
 
+.fixtype-compress {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fixtype-compress-icon {
+  color: orange;
+  padding-top: 0.9em;
+}
 
 .fixtype-container {
   flex-wrap: wrap;
   display: flex;
   justify-content: space-around;
+}
+
+.fixtype-name-container {
+  display: flex;
+}
+
+.fixtype-name-label {
+  margin: 0em 0.2em;
+  color: #797979;
+  font-weight: lighter;
+}
+
+.fixtype-name-input {
+  margin: 5px 10px;
+  height: 1.5em;
+  margin-top: -3px;
 }
 
 .fixtype-item-container {
@@ -86,20 +137,114 @@ form div {
 .fixtype-item-label {
   text-align: left;
   margin: 5px 0;
+  color: #797979;
+  font-weight: lighter;
 }
 
 .fixtype-item-input {
   margin: 0.5em 0;
   border: 1px solid #dddddd;
   text-align: left;
-  background-color: #dddddd;
+  background-color: #e6e6e6;
   height: 2em;
 }
 
 .partnumber-text {
   text-align: center;
-  background-color: #dddddd;
+  background-color: #e6e6e6;
   padding: 0.3em;
   width: 30%;
   margin-left: 35%;
+  font-weight: lighter;
+  color: #797979;
+}
+
+.fixtype-compressed {
+  color: #797979;
+  font-weight: lighter;
+  padding-right: 0.5em;
+}
+
+.fixtype-compressed-name {
+  color: orange;
+  /* font-weight: lighter; */
+  padding-right: 0.5em;
+}
+
+.fixtype-compressed-container {
+  width: 100%;
+  height: 2em;
+  display: flex;
+}
+
+/* RUNS */
+.channeltbl {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.channeltbl-header {
+  background-color: #a7a7a791;
+  height: 5vh;
+}
+
+.channeltbl-header-cell {
+  border: 1px solid #dddddd;
+  text-align: center;
+  font-size: 0.8em;
+  background-color: #e6e6e6;
+  color: #797979;
+  font-weight: lighter;
+}
+
+.channeltbl-body {
+  width: 30%;
+  height: 4vh;
+  border: 1px solid #dddddd;
+
+
+}
+
+.channeltbl-body-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  text-align: center;
+}
+
+.channeltbl-totalWatts {
+  font-style: italic;
+  color: #a7a7a7;
+}
+
+.channeltbl-toggle {
+  /* display: flex;
+  justify-content: center; */
+
+}
+
+.channeltbl-checkbox {
+  display: flex;
+  justify-content: center;
+}
+
+.channeltbl-toggle-icon {
+  margin-top: 0.5em;
+}
+
+.channeltbl-btn {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.channeltbl-add-btn {
+  background-color: #dddddd;
+  border: white solid 1px;
+  color: black;
+  width: 12.5%;
+  margin-right: 1px;
+  height: 2.5em;
+  color: #797979;
 }
