@@ -79,7 +79,7 @@ export default class RunRow extends React.Component {
         <td className='channeltbl-body'>
           <input
             name='runWatts'
-            className='channeltbl-body-input'
+            className='channeltbl-body-input channeltbl-totalWatts'
             value={this.runWatts()} />
         </td>
         <td className='channeltbl-body'>

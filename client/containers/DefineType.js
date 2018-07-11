@@ -7,7 +7,7 @@ const DefineType = (props) => {
     <div className='define-fixtype-container'>
       <h1 className='title'><strong>DEFINE TYPE</strong></h1>
       <div className='fixtype-name-container'>
-        <p className='fixtype-name-label'>Fixture Name:</p>
+        <p className='fixtype-name-label'>Fixture Type:</p>
         <input className='fixtype-name-input'
           onChange={(evt) => props.handleNameChange(props.idx, evt.target.value)}
           value={props.fixtureName} />

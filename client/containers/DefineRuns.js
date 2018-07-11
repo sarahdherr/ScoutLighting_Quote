@@ -13,15 +13,15 @@ class DefineRuns extends React.Component {
   }
 }
 
-const mapState = state => {
+const mapState = (state, ownProps) => {
   return {
-    prefix: state.fixture[0].prefix,
-    channel: state.fixture[0].channel,
-    lens: state.fixture[0].lens,
-    intensity: state.fixture[0].intensity,
-    cct: state.fixture[0].cct,
-    coating: state.fixture[0].coating,
-    dimming: state.fixture[0].dimming
+    prefix: state.fixture[ownProps.idx].prefix,
+    channel: state.fixture[ownProps.idx].channel,
+    lens: state.fixture[ownProps.idx].lens,
+    intensity: state.fixture[ownProps.idx].intensity,
+    cct: state.fixture[ownProps.idx].cct,
+    coating: state.fixture[ownProps.idx].coating,
+    dimming: state.fixture[ownProps.idx].dimming
   }
 }
 

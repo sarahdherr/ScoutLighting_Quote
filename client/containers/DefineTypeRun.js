@@ -41,7 +41,7 @@ class DefineTypeRun extends React.Component {
                       <span onClick={() => this.handleCollapse(idx)} className='fas fa-minus-square fixtype-compress-icon' />
                     </div>
                     <DefineType idx={idx} />
-                    <DefineRuns />
+                    <DefineRuns idx={idx} />
                   </div>
                 : <div key={idx} className='fixture-type-container'>
                     <div className='fixtype-compress'>
