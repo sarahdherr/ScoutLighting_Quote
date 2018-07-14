@@ -12,15 +12,14 @@ router.get('/', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  console.log('Inside the post route')
   try {
     const job = req.body.job
-    console.log(req.body.job)
     await Job.create(job)
-      .then(jobResponse => res.send(jobResponse))
-      .then(_ => console.log('JOB POSTED TO DB'))
+      .then(jobResponse =>
+        res.send(jobResponse.dataValues)
+      )
   } catch (err) {
-    console.log('Problem in post route')
+    console.log('Problem in job post route')
     next(err)
   }
 })

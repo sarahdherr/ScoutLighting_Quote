@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import DefineType from './DefineType'
 import DefineRuns from './DefineRuns'
-import {addAnotherFixture, stockRunsForFixture} from '../store'
+import {addAnotherFixture, stockRunsForFixture, saveJob, saveFixture} from '../store'
 
 class DefineTypeRun extends React.Component {
   constructor (props) {
@@ -12,6 +12,7 @@ class DefineTypeRun extends React.Component {
     }
     this.handleCollapse = this.handleCollapse.bind(this)
     this.handleAddFixture = this.handleAddFixture.bind(this)
+    this.handleSave = this.handleSave.bind(this)
   }
 
   handleCollapse (idx) {
@@ -26,6 +27,11 @@ class DefineTypeRun extends React.Component {
     let newFixtures = this.state.fixtures.map(fix => false)
     newFixtures.push(true)
     this.setState({fixtures: newFixtures})
+  }
+
+  handleSave (evt) {
+    evt.preventDefault()
+    this.props.saveJob(this.props.job, this.props.fixtures, this.props.runs)
   }
 
   render () {
@@ -56,8 +62,16 @@ class DefineTypeRun extends React.Component {
             }
           </div>
           <div>
-            <button type='submit' onClick={this.handleAddFixture}>Add Another Type</button>
-            <button type='submit'>Save</button>
+            <button type='submit'
+              className='submit-quote-btn'
+              onClick={this.handleAddFixture}>
+              Add Another Type
+            </button>
+            <button type='submit'
+              className='submit-quote-btn'
+              onClick={this.handleSave}>
+              Save
+            </button>
           </div>
         </div>
       )
@@ -70,7 +84,10 @@ class DefineTypeRun extends React.Component {
 const mapState = state => {
   return {
     partNumber: getAllPartNumbers(state.fixture),
-    fixtureName: getAllFixtureNames(state.fixture)
+    fixtureName: getAllFixtureNames(state.fixture),
+    fixtures: getAllFixtures(state.fixture),
+    job: state.job,
+    runs: getAllRuns(state.run)
   }
 }
 
@@ -84,11 +101,24 @@ function getAllFixtureNames (fixtures) {
   return keys.map(key => fixtures[key].fixtureName)
 }
 
+function getAllFixtures (fixtures) {
+  let keys = Object.keys(fixtures)
+  return keys.map(key => fixtures[key])
+}
+
+function getAllRuns (runs) {
+  let keys = Object.keys(runs)
+  return keys.map(key => runs[key])
+}
+
 const mapDispatch = dispatch => {
   return {
     addAnotherFixture (idx) {
       dispatch(addAnotherFixture(idx))
       dispatch(stockRunsForFixture(idx))
+    },
+    saveJob (job, fixtures, runs) {
+      dispatch(saveJob(job, fixtures, runs))
     }
   }
 }

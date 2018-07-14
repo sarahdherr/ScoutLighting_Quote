@@ -25,7 +25,7 @@ const defaultFixture = {
   intensity: '',
   cct: '',
   dimming: '',
-  coating: '',
+  powderCoating: '',
   partNumber: ''
 }
 
@@ -182,7 +182,7 @@ export default function (state = defaultFixtures, action) {
       newState[getIdx(action.idx)].cct = action.cct
       break
     case STOCK_COATING:
-      newState[getIdx(action.idx)].coating = action.coating
+      newState[getIdx(action.idx)].powderCoating = action.coating
       break
     case STOCK_DIMMING:
       newState[getIdx(action.idx)].dimming = action.dimming

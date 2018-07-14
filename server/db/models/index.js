@@ -14,7 +14,7 @@ const Run = require('./run')
 
 Quote.belongsTo(User)
 Quote.belongsTo(Job)
-Fixture.belongsTo(Quote)
+Fixture.belongsTo(Job)
 Run.belongsTo(Fixture)
 Drawing.belongsTo(Fixture)
 /**

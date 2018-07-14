@@ -91,7 +91,7 @@ const DefineType = (props) => {
           <select
               className='fixtype-item-input'
               name='powderCoating'
-              value={props.coating}
+              value={props.powderCoating}
               onChange={(evt) => {
                 props.handleCoating(props.idx, evt.target.value)
               }} >

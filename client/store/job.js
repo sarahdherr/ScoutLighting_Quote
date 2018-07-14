@@ -33,23 +33,50 @@ export const stockJob = (job) => async dispatch => {
   }
 }
 
-export const saveJob = (job) => async dispatch => {
-  console.log('inside save job')
-  let res
+const saveRun = (runVals, fixture) => async dispatch => {
   try {
-    console.log('did the posting')
-    res = await axios.post(`http://localhost:8080/api/jobs`, {job})
+    let length = (runVals.lengthFt * 12) + runVals.lengthIn
+    let runWattage = Number(fixture.intensity) * (length / 12)
+    let totalWattage = runWattage * runVals.quantity
+    let run = Object.assign({}, runVals, {length, runWattage, totalWattage})
+    let runRes = await axios.post(`http://localhost:8080/api/runs`, {run, fixtureId: fixture.id})
+    console.log('r !!!!', runRes)
   } catch (err) {
     console.log('something went wrong in the post')
     console.error(err)
   }
-
-  // try {
-  //   dispatch(stockJob(res.data))
-  // } catch (err) {
-  //   console.error(err)
-  // }
 }
+
+const saveFixture = (fixture, jobId, runs) => async dispatch => {
+  try {
+    let fixtureRes = await axios.post(`http://localhost:8080/api/fixtures`, {fixture, jobId})
+    console.log('f !!!!', fixtureRes)
+    let fixtureData = fixtureRes.data
+    runs.map(run => {
+      dispatch(saveRun(run, fixtureData))
+    })
+  } catch (err) {
+    console.log('something went wrong in the post')
+    console.error(err)
+  }
+}
+
+export const saveJob = (job, fixtures, runs) => async dispatch => {
+  try {
+    let jobRes = await axios.post(`http://localhost:8080/api/jobs`, {job})
+    let jobId = jobRes.data.id
+    // let fixtureRes = await axios.post(`http://localhost:8080/api/fixtures`, {fixture, jobId})
+    // console.log('f !!!!', fixtureRes)
+    fixtures.map((fixture, idx) => {
+      dispatch(saveFixture(fixture, jobId, runs[idx]))
+    })
+  } catch (err) {
+    console.log('something went wrong in the post')
+    console.error(err)
+  }
+}
+
+
 
 /**
  * REDUCER
