@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import DefineType from './DefineType'
 import DefineRuns from './DefineRuns'
-import {addAnotherFixture} from '../store'
+import {addAnotherFixture, stockRunsForFixture} from '../store'
 
 class DefineTypeRun extends React.Component {
   constructor (props) {
@@ -22,8 +22,8 @@ class DefineTypeRun extends React.Component {
 
   handleAddFixture (evt) {
     evt.preventDefault()
-    this.props.addAnotherFixture()
-    let newFixtures = this.state.fixtures
+    this.props.addAnotherFixture(this.state.fixtures.length)
+    let newFixtures = this.state.fixtures.map(fix => false)
     newFixtures.push(true)
     this.setState({fixtures: newFixtures})
   }
@@ -86,8 +86,9 @@ function getAllFixtureNames (fixtures) {
 
 const mapDispatch = dispatch => {
   return {
-    addAnotherFixture () {
-      dispatch(addAnotherFixture())
+    addAnotherFixture (idx) {
+      dispatch(addAnotherFixture(idx))
+      dispatch(stockRunsForFixture(idx))
     }
   }
 }

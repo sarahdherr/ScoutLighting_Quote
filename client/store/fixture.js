@@ -121,9 +121,8 @@ export const saveFixture = (fixture) => async dispatch => {
   }
 }
 
-export const addAnotherFixture = () => async dispatch => {
+export const addAnotherFixture = (idx) => async dispatch => {
   try {
-    var idx = 1 // todo: not hard code, use object.keys
     let fix = {
       fixtureName: '',
       prefix: 'SS',
