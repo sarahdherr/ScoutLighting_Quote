@@ -1,4 +1,5 @@
 const isDev = process.env.NODE_ENV === 'development'
+var webpack = require('webpack')
 
 module.exports = {
   mode: isDev ? 'development' : 'production',
@@ -22,5 +23,21 @@ module.exports = {
         loader: 'babel-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({
+    // test: /\.xxx$/, // may apply this only for some modules
+      options: {
+        vendor: [
+          'xlsx',
+          'file-saver'
+        ]
+      }
+    })
+  ],
+  node: {fs: 'empty'},
+  externals: [
+    {'./cptable': 'var cptable'},
+    {'./jszip': 'jszip'}
+  ]
 }

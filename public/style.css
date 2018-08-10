@@ -249,6 +249,32 @@ form div {
   color: #797979;
 }
 
+.channeltbl-table-container {
+    display: flex;
+}
+
+.channeltbl-deleterun-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 2.5em;
+}
+
+.channeltbl-deleterun-btn {
+    border: none;
+    color: orange;
+    font-size: 0.8em;
+}
+
+.channeltbl-deleterun-btn:active {
+  border: none;
+}
+
+.channeltbl-deleterun-btn:focus {
+  border: none;
+  outline: 0;
+}
+
 
 /* FINAL BUTTONS */
 
@@ -260,4 +286,11 @@ form div {
   margin: 1em 0.5em;
   font-size: 0.8em;
   font-weight: lighter;
+}
+
+.download-btn {
+  border: 1px solid orange;
+  padding: 7px;
+  font-size: 0.9em;
+  color: orange;
 }

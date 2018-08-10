@@ -6,6 +6,7 @@ import axios from 'axios'
 const STOCK_RUNS = 'STOCK_RUNS'
 const STOCK_ANOTHER_RUN = 'STOCK_ANOTHER_RUN'
 const STOCK_ANOTHER_FIXTURE_RUNS = 'STOCK_ANOTHER_FIXTURE_RUNS'
+const DELETE_RUN = 'DELETE_RUN'
 
 /**
  * INITIAL STATE
@@ -34,6 +35,8 @@ const stockAnotherRun = (idx, run) => ({type: STOCK_ANOTHER_RUN, idx, run})
 
 const stockAnotherRunGroup = (idx) => ({type: STOCK_ANOTHER_FIXTURE_RUNS, idx})
 
+const deleteRun = (fixtureIdx, runIdx) => ({type: DELETE_RUN, fixtureIdx, runIdx})
+
 /**
  * THUNK CREATORS
  */
@@ -44,9 +47,18 @@ export const stockRunsForFixture = (idx) => async dispatch => {
     console.log(err)
   }
 }
+
 export const setRuns = (idx, runs) => async dispatch => {
   try {
     dispatch(stockRuns(idx, runs))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const removeRun = (fixtureIdx, runIdx) => async dispatch => {
+  try {
+    dispatch(deleteRun(fixtureIdx, runIdx))
   } catch (err) {
     console.log(err)
   }
@@ -71,16 +83,6 @@ export const addAnotherRun = (idx) => async dispatch => {
   }
 }
 
-export const saveRuns = (run) => async dispatch => {
-  let res
-  try {
-    // `/runs` routes still to write
-    res = await axios.post(`http://localhost:8080/api/runs`, {run})
-  } catch (err) {
-    console.error(err)
-  }
-}
-
 /**
  * REDUCER
  */
@@ -95,6 +97,10 @@ export default function (state = defaultRuns, action) {
       break
     case STOCK_ANOTHER_FIXTURE_RUNS:
       newState[action.idx] = [ defaultRun, defaultRun, defaultRun ]
+      break
+    case DELETE_RUN:
+      newState[action.fixtureIdx].splice(action.runIdx, 1)
+      break
     default:
       break
   }

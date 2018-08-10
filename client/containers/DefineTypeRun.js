@@ -2,7 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import DefineType from './DefineType'
 import DefineRuns from './DefineRuns'
-import {addAnotherFixture, stockRunsForFixture, saveJob, saveFixture} from '../store'
+import ExcelDownload from '../components/ExcelDownload'
+import {addAnotherFixture, stockRunsForFixture, saveJob} from '../store'
 
 class DefineTypeRun extends React.Component {
   constructor (props) {
@@ -35,6 +36,7 @@ class DefineTypeRun extends React.Component {
   }
 
   render () {
+    console.log('!', this.props)
     if (this.props.showTypeRun) {
       return (
         <div>
@@ -43,21 +45,21 @@ class DefineTypeRun extends React.Component {
               this.state.fixtures.map((fix, idx) =>
                 fix
                 ? <div key={idx} className='fixture-type-container'>
-                    <div className='fixtype-compress'>
-                      <span onClick={() => this.handleCollapse(idx)} className='fas fa-minus-square fixtype-compress-icon' />
-                    </div>
-                    <DefineType idx={idx} />
-                    <DefineRuns idx={idx} />
+                  <div className='fixtype-compress'>
+                    <span onClick={() => this.handleCollapse(idx)} className='fas fa-minus-square fixtype-compress-icon' />
                   </div>
+                  <DefineType idx={idx} />
+                  <DefineRuns idx={idx} />
+                </div>
                 : <div key={idx} className='fixture-type-container'>
-                    <div className='fixtype-compress'>
-                      <div className='fixtype-compressed-container'>
-                        <p className='fixtype-compressed-name'>Fixture: {this.props.fixtureName[idx]}</p>
-                        <p className='fixtype-compressed'>Part #: {this.props.partNumber[idx]}</p>
-                      </div>
-                      <span onClick={() => this.handleCollapse(idx)} className='fas fa-plus-square fixtype-compress-icon' />
+                  <div className='fixtype-compress'>
+                    <div className='fixtype-compressed-container'>
+                      <p className='fixtype-compressed-name'>Fixture: {this.props.fixtureName[idx]}</p>
+                      <p className='fixtype-compressed'>Part #: {this.props.partNumber[idx]}</p>
                     </div>
+                    <span onClick={() => this.handleCollapse(idx)} className='fas fa-plus-square fixtype-compress-icon' />
                   </div>
+                </div>
               )
             }
           </div>
@@ -72,6 +74,11 @@ class DefineTypeRun extends React.Component {
               onClick={this.handleSave}>
               Save
             </button>
+            {
+              Object.keys(this.props.csvData).length
+              ? <ExcelDownload job={this.props.job} fixtureNames={this.props.fixtureName} csvData={this.props.csvData} />
+              : null
+            }
           </div>
         </div>
       )
@@ -87,7 +94,8 @@ const mapState = state => {
     fixtureName: getAllFixtureNames(state.fixture),
     fixtures: getAllFixtures(state.fixture),
     job: state.job,
-    runs: getAllRuns(state.run)
+    runs: getAllRuns(state.run),
+    csvData: state.csv
   }
 }
 

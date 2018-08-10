@@ -1,11 +1,12 @@
 import axios from 'axios'
 import history from '../history'
+import calculateCSV from '../helpers/calculateCSV'
+import {stockCSV} from '../store'
 
 /**
  * ACTION TYPES
  */
 const GET_JOB = 'GET_JOB'
-const PING_JOB = 'PING_JOB'
 /**
  * INITIAL STATE
  */
@@ -40,7 +41,20 @@ const saveRun = (runVals, fixture) => async dispatch => {
     let totalWattage = runWattage * runVals.quantity
     let run = Object.assign({}, runVals, {length, runWattage, totalWattage})
     let runRes = await axios.post(`http://localhost:8080/api/runs`, {run, fixtureId: fixture.id})
-    console.log('r !!!!', runRes)
+    console.log('r !!!!', runRes, fixture)
+
+    let runLength = runRes.data.length / 12
+    let runToExport = {
+      lengthFt: runLength,
+      quantity: runRes.data.quantity,
+      wattsPerFt: runRes.data.runWattage / runLength,
+      type: 'LC2'
+    }
+    dispatch(stockCSV(runToExport, fixture))
+    // console.log('inputted run')
+    // console.log(runToExport)
+    // console.log('csv to export')
+    // console.log(calculateCSV(runToExport))
   } catch (err) {
     console.log('something went wrong in the post')
     console.error(err)
@@ -83,8 +97,6 @@ export const saveJob = (job, fixtures, runs) => async dispatch => {
  */
 export default function (state = defaultJob, action) {
   switch (action.type) {
-    case PING_JOB:
-      return {name: 'Sarah'}
     case GET_JOB:
       return action.job
     default:

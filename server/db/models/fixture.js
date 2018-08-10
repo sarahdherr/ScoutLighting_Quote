@@ -2,6 +2,9 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Fixture = db.define('fixture', {
+  fixtureName: {
+    type: Sequelize.STRING
+  },
   partNumber: {
     type: Sequelize.STRING
   },

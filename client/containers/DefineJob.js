@@ -24,7 +24,7 @@ class DefineJob extends React.Component {
     this.setState(tempObj)
   }
 
-  onNextClick(evt) {
+  onNextClick (evt) {
     this.props.handleClick(this.state)
     this.props.handleNext()
   }

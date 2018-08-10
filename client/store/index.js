@@ -6,8 +6,9 @@ import user from './user'
 import job from './job'
 import fixture from './fixture'
 import run from './run'
+import csv from './csv'
 
-const reducer = combineReducers({user, job, fixture, run})
+const reducer = combineReducers({user, job, fixture, run, csv})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
@@ -18,3 +19,4 @@ export * from './user'
 export * from './job'
 export * from './fixture'
 export * from './run'
+export * from './csv'
