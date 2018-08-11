@@ -3,16 +3,16 @@
 This is a quote form for people who are interested in using Scout Lighting.
 
 ## TODO:
-1. CSV writer hooked up [done - might look into more]
-2. Do calculations for CSV writer
-3. Connect run calculations to CSV writer
+1. CSV writer hooked up [done]
+2. Do calculations for CSV writer [done]
+3. Connect run calculations to CSV writer [done]
 4. Delete run from table [done]
 5. Deploy application
 6. Mask deployed url with nice url
 7. Access saved quotes
 8. Access saved quotes by search
 9. Send email with CSV when submitted
-10. Style to look better 
+10. Style to look better
 
 
 

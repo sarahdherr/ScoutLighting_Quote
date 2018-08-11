@@ -40,7 +40,7 @@ const saveRun = (runVals, fixture) => async dispatch => {
     let runWattage = Number(fixture.intensity) * (length / 12)
     let totalWattage = runWattage * runVals.quantity
     let run = Object.assign({}, runVals, {length, runWattage, totalWattage})
-    let runRes = await axios.post(`http://localhost:8080/api/runs`, {run, fixtureId: fixture.id})
+    let runRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/runs`, {run, fixtureId: fixture.id})
     console.log('r !!!!', runRes, fixture)
 
     let runLength = runRes.data.length / 12
@@ -63,7 +63,7 @@ const saveRun = (runVals, fixture) => async dispatch => {
 
 const saveFixture = (fixture, jobId, runs) => async dispatch => {
   try {
-    let fixtureRes = await axios.post(`http://localhost:8080/api/fixtures`, {fixture, jobId})
+    let fixtureRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/fixtures`, {fixture, jobId})
     console.log('f !!!!', fixtureRes)
     let fixtureData = fixtureRes.data
     runs.map(run => {
@@ -77,9 +77,9 @@ const saveFixture = (fixture, jobId, runs) => async dispatch => {
 
 export const saveJob = (job, fixtures, runs) => async dispatch => {
   try {
-    let jobRes = await axios.post(`http://localhost:8080/api/jobs`, {job})
+    let jobRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/jobs`, {job})
     let jobId = jobRes.data.id
-    // let fixtureRes = await axios.post(`http://localhost:8080/api/fixtures`, {fixture, jobId})
+    // let fixtureRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/fixtures`, {fixture, jobId})
     // console.log('f !!!!', fixtureRes)
     fixtures.map((fixture, idx) => {
       dispatch(saveFixture(fixture, jobId, runs[idx]))

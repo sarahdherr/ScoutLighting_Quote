@@ -115,7 +115,7 @@ export const saveFixture = (fixture) => async dispatch => {
   let res
   try {
     // /fixtures routes still to write
-    res = await axios.post(`http://localhost:8080/api/fixtures`, {fixture})
+    res = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/fixtures`, {fixture})
   } catch (err) {
     console.error(err)
   }
