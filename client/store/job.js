@@ -40,21 +40,17 @@ const saveRun = (runVals, fixture) => async dispatch => {
     let runWattage = Number(fixture.intensity) * (length / 12)
     let totalWattage = runWattage * runVals.quantity
     let run = Object.assign({}, runVals, {length, runWattage, totalWattage})
-    let runRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/runs`, {run, fixtureId: fixture.id})
-    console.log('r !!!!', runRes, fixture)
+    let runRes = await axios.post(`/api/runs`, {run, fixtureId: fixture.id})
 
     let runLength = runRes.data.length / 12
     let runToExport = {
       lengthFt: runLength,
       quantity: runRes.data.quantity,
       wattsPerFt: runRes.data.runWattage / runLength,
-      type: 'LC2'
+      type: fixture.fixtureName,
+      dimmingType: fixture.dimming
     }
     dispatch(stockCSV(runToExport, fixture))
-    // console.log('inputted run')
-    // console.log(runToExport)
-    // console.log('csv to export')
-    // console.log(calculateCSV(runToExport))
   } catch (err) {
     console.log('something went wrong in the post')
     console.error(err)
@@ -63,8 +59,7 @@ const saveRun = (runVals, fixture) => async dispatch => {
 
 const saveFixture = (fixture, jobId, runs) => async dispatch => {
   try {
-    let fixtureRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/fixtures`, {fixture, jobId})
-    console.log('f !!!!', fixtureRes)
+    let fixtureRes = await axios.post(`/api/fixtures`, {fixture, jobId})
     let fixtureData = fixtureRes.data
     runs.map(run => {
       dispatch(saveRun(run, fixtureData))
@@ -77,10 +72,9 @@ const saveFixture = (fixture, jobId, runs) => async dispatch => {
 
 export const saveJob = (job, fixtures, runs) => async dispatch => {
   try {
-    let jobRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/jobs`, {job})
+    let jobRes = await axios.post(`/api/jobs`, {job})
     let jobId = jobRes.data.id
     // let fixtureRes = await axios.post(`https://scout-lighting-quote.herokuapp.com/api/fixtures`, {fixture, jobId})
-    // console.log('f !!!!', fixtureRes)
     fixtures.map((fixture, idx) => {
       dispatch(saveFixture(fixture, jobId, runs[idx]))
     })

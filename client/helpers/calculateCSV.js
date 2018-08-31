@@ -1,38 +1,39 @@
 export default function calculateCSV (run) {
+  console.log('******', run)
   var csvRows = []
   for (let i = 0; i < run.quantity; i++) {
     var totalLength = run.lengthFt
-    var firstRow = calculateFirstRow(totalLength, run.type, run.wattsPerFt)
+    var firstRow = calculateFirstRow(totalLength, run.type, run.wattsPerFt, run.dimmingType)
     csvRows.push(firstRow)
     var leftOverFt = totalLength - firstRow.breakdown
-    var leftOverWatts = 100 - firstRow.wattage
+    var leftOverWatts = 90 - firstRow.wattage
     while (leftOverFt) {
-      var nextRow = calculateNextRow(leftOverFt, run.wattsPerFt, leftOverWatts)
+      var nextRow = calculateNextRow(leftOverFt, run.wattsPerFt, leftOverWatts, run.dimmingType)
       csvRows.push(nextRow)
       leftOverFt -= nextRow.breakdown
-      leftOverWatts = (leftOverWatts - nextRow.wattage) < 0 ? (leftOverWatts - nextRow.wattage) : 100
+      leftOverWatts = (leftOverWatts - nextRow.wattage) < 0 ? (leftOverWatts - nextRow.wattage) : 90
     }
   }
   return csvRows
 }
 
-function calculateFirstRow (totalLength, runType, wattsPerFt) {
+function calculateFirstRow (totalLength, runType, wattsPerFt, dimmingType) {
   var firstRow = {
     type: runType,
     length: totalLength
   }
   firstRow = doCalculations(firstRow, totalLength, wattsPerFt)
   firstRow.powerfeed = 1
-  firstRow.driver = 1
+  firstRow[dimmingType] = 1
   return firstRow
 }
 
-function calculateNextRow (totalLength, wattsPerFt, wattsLeft) {
+function calculateNextRow (totalLength, wattsPerFt, wattsLeft, dimmingType) {
   var nextRow = {}
   nextRow = doCalculations(nextRow, totalLength, wattsPerFt)
   nextRow.powerfeed = 0
   if (wattsLeft - nextRow.wattage < 0) {
-    nextRow.driver = 1
+    nextRow[dimmingType] = 1
   }
   return nextRow
 }

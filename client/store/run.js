@@ -66,7 +66,6 @@ export const removeRun = (fixtureIdx, runIdx) => async dispatch => {
 
 export const addAnotherRun = (idx) => async dispatch => {
   try {
-    console.log('addAnotherRun', idx)
     let defaultRun = {
       group: 0,
       quantity: 0,

@@ -19,9 +19,8 @@ const setCSV = (runToExport, fixtureName) => ({type: SET_CSV, runToExport, fixtu
  */
 export const stockCSV = (runToExport, fixture) => async dispatch => {
   try {
+    console.log('!!!!!', fixture)
     let values = calculateCSV(runToExport)
-    console.log('***', values)
-    console.log('***', fixture.fixtureName)
     dispatch(setCSV(values, fixture.fixtureName))
   } catch (err) {
     console.log(err)

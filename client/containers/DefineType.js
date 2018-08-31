@@ -8,110 +8,145 @@ const DefineType = (props) => {
       <h1 className='title'><strong>DEFINE TYPE</strong></h1>
       <div className='fixtype-name-container'>
         <p className='fixtype-name-label'>Fixture Type:</p>
-        <input className='fixtype-name-input'
+        <input className='fixtype-name-input fixtype-radio-input'
           onChange={(evt) => props.handleNameChange(props.idx, evt.target.value)}
           value={props.fixtureName} />
       </div>
       <div className='fixtype-container'>
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Fixture Prefix:</p>
-          <select className='fixtype-item-input' name='prefix' value={props.prefix} onChange={(evt) => props.handlePrefix(props.idx, evt.target.value)} >
-            <option>SS</option>
-          </select>
+          <div>
+            <label className='fixtype-radio-label'>
+              <input
+                type='radio'
+                value='SS'
+                className='fixtype-item-input fixtype-radio-input'
+                name='prefix'
+                onChange={(evt) => props.handlePrefix(props.idx, evt.target.value)}
+                checked={props.prefix === 'SS'} />
+              <p className='fixtype-radio-text'>SS</p>
+            </label>
+          </div>
         </div>
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Channel:</p>
-          <select
-              className='fixtype-item-input'
-              name='channel'
-              value={props.channel}
-              onChange={(evt) => {
-                props.handleChannel(props.idx, evt.target.value)
-              }} >
-            <option></option>
-            <option>E - None</option>
-            <option>S - Surface Mount</option>
-            <option>C - Corner</option>
-          </select>
+          {['E - None', 'S - Surface Mount', 'C - Corner'].map((channel, idx) =>
+            <div key={idx}>
+              <label className='fixtype-radio-label'>
+                <input
+                  type='radio'
+                  className='fixtype-item-input fixtype-radio-input'
+                  name='channel'
+                  value={channel}
+                  onChange={(evt) => {
+                    props.handleChannel(props.idx, evt.target.value)
+                  }}
+                  checked={props.channel === channel} />
+                  <p className='fixtype-radio-text'>{channel}</p>
+              </label>
+            </div>
+          )}
         </div>
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Lens:</p>
-          <select
-              className='fixtype-item-input'
-              name='lens'
-              value={props.lens}
-              onChange={(evt) => {
-                props.handleLens(props.idx, evt.target.value)
-              }} >
-            <option></option>
-            <option>FM - Flat Milky</option>
-            <option>FF - Flat Frosted</option>
-          </select>
+          {['FM - Flat Milky', 'FF - Flat Frosted'].map((lens, idx) =>
+            <div key={idx}>
+              <label className='fixtype-radio-label'>
+                <input
+                  type='radio'
+                  className='fixtype-item-input fixtype-radio-input'
+                  name='lens'
+                  value={lens}
+                  onChange={(evt) => {
+                    props.handleLens(props.idx, evt.target.value)
+                  }}
+                  checked={props.lens === lens} />
+                  <p className='fixtype-radio-text'>{lens}</p>
+              </label>
+            </div>
+          )}
         </div>
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Intensity:</p>
-          <select
-              className='fixtype-item-input'
-              name='intensity'
-              value={props.intensity}
-              onChange={(evt) => {
-                props.handleIntensity(props.idx, evt.target.value)
-              }} >
-            <option></option>
-            <option>2.5</option>
-            <option>5.0</option>
-            <option>10.0</option>
-          </select>
+          {['2.5', '5.0', '10.0'].map((int, idx) =>
+            <div key={idx}>
+              <label className='fixtype-radio-label'>
+                <input
+                  type='radio'
+                  className='fixtype-item-input fixtype-radio-input'
+                  name='intensity'
+                  value={int}
+                  onChange={(evt) => {
+                    props.handleIntensity(props.idx, evt.target.value)
+                  }}
+                  checked={props.intensity === int} />
+                <p className='fixtype-radio-text'>{int}</p>
+              </label>
+            </div>
+          )}
         </div>
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>CCT:</p>
-          <select
-              className='fixtype-item-input'
-              name='cct'
-              value={props.cct}
-              onChange={(evt) => {
-                props.handleCct(props.idx, evt.target.value)
-              }} >
-            <option></option>
-            <option>22 - 2200K</option>
-            <option>27 - 2700K</option>
-            <option>30 - 3000K</option>
-            <option>35 - 3500K</option>
-            <option>41 - 4100K</option>
-            <option>55 - 5500K</option>
-          </select>
+          {['22 - 2200K', '27 - 2700K', '30 - 3000K', ' 35 - 3500K', '41 - 4100K', '55 - 5500K'].map((cct, idx) =>
+            <div key={idx}>
+              <label className='fixtype-radio-label'>
+                <input
+                  type='radio'
+                  className='fixtype-item-input fixtype-radio-input'
+                  name='cct'
+                  value={cct}
+                  onChange={(evt) => {
+                    props.handleCct(props.idx, evt.target.value)
+                  }}
+                  checked={props.cct === cct} />
+                <p className='fixtype-radio-text'>{cct}</p>
+              </label>
+            </div>
+          )}
         </div>
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Powder Coating:</p>
-          <select
-              className='fixtype-item-input'
-              name='powderCoating'
-              value={props.powderCoating}
-              onChange={(evt) => {
-                props.handleCoating(props.idx, evt.target.value)
-              }} >
-            <option></option>
-            <option>None</option>
-            <option>Matte White</option>
-            <option>Matte Black</option>
-            <option>Custom</option>
-          </select>
+          {['None', 'Matte White', 'Matte Black', 'Custom'].map((powderCoating, idx) =>
+            <div key={idx}>
+              <label className='fixtype-radio-label'>
+                <input
+                  type='radio'
+                  className='fixtype-item-input fixtype-radio-input'
+                  name='powderCoating'
+                  value={powderCoating}
+                  onChange={(evt) => {
+                    props.handleCoating(props.idx, evt.target.value)
+                  }}
+                  checked={props.powderCoating === powderCoating} />
+                <p className='fixtype-radio-text'>{powderCoating}</p>
+              </label>
+            </div>
+          )}
         </div>
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Control/Dimming:</p>
-          <select className='fixtype-item-input' name='dimming' value={props.dimming} onChange={(evt) => props.handleDimming(props.idx, evt.target.value)} >
-            <option></option>
-            <option>None</option>
-            <option>0 - 10</option>
-            <option>MLV</option>
-            <option>DMX</option>
-          </select>
+          {['None', '0-10', 'MLV', 'DMX'].map((dimming, idx) =>
+            <div key={idx}>
+              <label className='fixtype-radio-label'>
+                <input
+                  type='radio'
+                  className='fixtype-item-input fixtype-radio-input'
+                  name='dimming'
+                  value={dimming}
+                  onChange={(evt) => {
+                    props.handleDimming(props.idx, evt.target.value)
+                  }}
+                  checked={props.dimming === dimming} />
+                <p className='fixtype-radio-text'>{dimming}</p>
+              </label>
+            </div>
+          )}
         </div>
       </div>
       <p className='partnumber-text'>Part #: {props.partNumber}</p>
@@ -128,7 +163,7 @@ const mapState = (state, ownProps) => {
     lens: state.fixture[ownProps.idx].lens,
     intensity: state.fixture[ownProps.idx].intensity,
     cct: state.fixture[ownProps.idx].cct,
-    coating: state.fixture[ownProps.idx].coating,
+    powderCoating: state.fixture[ownProps.idx].powderCoating,
     dimming: state.fixture[ownProps.idx].dimming,
     partNumber: state.fixture[ownProps.idx].partNumber
   }

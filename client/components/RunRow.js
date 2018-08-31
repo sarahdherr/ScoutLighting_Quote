@@ -93,13 +93,13 @@ class RunRow extends React.Component {
           <input
             name='runWatts'
             className='channeltbl-body-input channeltbl-totalWatts'
-            value={this.runWatts()} />
+            value={`${this.runWatts()} W`} />
         </td>
         <td className='channeltbl-body'>
           <input
             name='totalWatts'
             className='channeltbl-body-input channeltbl-totalWatts'
-            value={this.totalWatts()} />
+            value={`${this.totalWatts()} W`} />
         </td>
         <td className='channeltbl-body'>
           <label className='channeltbl-checkbox'>

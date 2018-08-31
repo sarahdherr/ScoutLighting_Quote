@@ -5,17 +5,12 @@ import {connect} from 'react-redux'
 class DefineRuns extends React.Component {
   constructor(props) {
     super(props)
-    this.onXClick = this.onXClick.bind(this)
-  }
-  onXClick(evt) {
-    evt.preventDefault()
-    console.log('got clicked!!')
   }
   render() {
     return (
       <div>
         <h1 className='title'><strong>DEFINE RUNS</strong></h1>
-        <RunTable intensity={this.props.intensity} idx={this.props.idx} onXClick={this.onXClick}/>
+        <RunTable intensity={this.props.intensity} idx={this.props.idx} />
       </div>
     )
   }

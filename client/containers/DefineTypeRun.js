@@ -36,7 +36,6 @@ class DefineTypeRun extends React.Component {
   }
 
   render () {
-    console.log('!', this.props)
     if (this.props.showTypeRun) {
       return (
         <div>
