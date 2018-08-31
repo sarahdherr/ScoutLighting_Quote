@@ -4,7 +4,6 @@ import ReactExport from 'react-data-export'
 const ExcelFile = ReactExport.ExcelFile
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn
-const ExcelCell = ReactExport.ExcelFile.ExcelCell
 
 const ExcelDownload = (props) => {
   const job = props.job
@@ -18,13 +17,12 @@ const ExcelDownload = (props) => {
     return total
   }
   var fixNames = Object.keys(props.csvData)
-  console.log(props.csvData[fixNames[0]])
-  // Length, Driver,	2 Foot,	1 Foot,	1 Inch,	Corner Left,	Corner Right,	Power Feed,	Non Feed,	Mounting Kit
+
   var sumData = fixNames.map(fixtureName => {
     let length = sum(props.csvData[fixtureName], 'length')
-    let zeroTen30W = sum(props.csvData[fixtureName], 'driver')
-    let zeroTen60W = sum(props.csvData[fixtureName], 'driver')
-    let zeroTen96W = sum(props.csvData[fixtureName], '0-10')
+    let zeroTen30W = sum(props.csvData[fixtureName], 'zeroToTen30')
+    let zeroTen60W = sum(props.csvData[fixtureName], 'zeroToTen60')
+    let zeroTen96W = sum(props.csvData[fixtureName], 'zeroToTen96')
     let mlv = sum(props.csvData[fixtureName], 'MLV')
     let dmx = sum(props.csvData[fixtureName], 'DMX')
     let nonDim = sum(props.csvData[fixtureName], 'None')
@@ -56,22 +54,15 @@ const ExcelDownload = (props) => {
   ]
   return (
     <ExcelFile filename={`${props.job.jobName} - ${props.job.specifier}`} element={<button type='submit' className='download-btn'>Download Excel</button>}>
-    {/* company:"CompanyABC"
-        jobName:"Equinox Midtown"
-        location:"Midtown NY"
-        name:"Sarah"
-        specifier:"Lux Tech"
-        type:"Commercial" */}
-      <ExcelSheet dataSet={summaryData} name='Job Info' />
       {Object.keys(props.csvData).map((fixName, idx) =>
         <ExcelSheet key={fixName} data={props.csvData[fixName]} name={`${fixName}`}>
           <ExcelColumn label='Type' value='type' />
           <ExcelColumn label='Length' value='length' />
           <ExcelColumn label='Breakdown' value='breakdown' />
           <ExcelColumn label='Wattage' value='wattage' />
-          <ExcelColumn label='0-10 30W' value='driver' />
-          <ExcelColumn label='0-10 60W' value='driver' />
-          <ExcelColumn label='0-10 96W' value='0-10' />
+          <ExcelColumn label='0-10 30W' value='zeroToTen30' />
+          <ExcelColumn label='0-10 60W' value='zeroToTen60' />
+          <ExcelColumn label='0-10 96W' value='zeroToTen96' />
           <ExcelColumn label='MLV 96' value='MLV' />
           <ExcelColumn label='DMX 96' value='DMX' />
           <ExcelColumn label='Non Dim 96' value='None' />

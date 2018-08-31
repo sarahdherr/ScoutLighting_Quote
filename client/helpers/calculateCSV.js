@@ -14,6 +14,11 @@ export default function calculateCSV (run) {
       leftOverWatts = (leftOverWatts - nextRow.wattage) < 0 ? (leftOverWatts - nextRow.wattage) : 90
     }
   }
+
+  if (run.dimmingType === '0-10') {
+    csvRows = update0to10Drivers(csvRows)
+  }
+
   return csvRows
 }
 
@@ -51,4 +56,30 @@ function doCalculations (rowObj, totalLength, wattsPerFt) {
   rowObj.nonfeed = (totalLength - rowObj.breakdown === 0) ? 1 : 0
   rowObj.mountingKit = 1
   return rowObj
+}
+
+function update0to10Drivers(rows) {
+  let driverObjs = []
+  for (let i = 0; i < rows.length; i++) {
+    let row = rows[i]
+    if (row['0-10']) {
+      driverObjs.push({idx: i, totalWattage: row.wattage})
+    } else {
+      driverObjs[driverObjs.length - 1]["totalWattage"] += row.wattage
+    }
+  }
+  for (let i = 0; i < driverObjs.length; i++) {
+    let driverObj = driverObjs[i]
+    if (driverObj.totalWattage < 25) {
+      delete rows[driverObj.idx]['0-10']
+      rows[driverObj.idx].zeroToTen30 = 1
+    } else if (driverObj.totalWattage < 55) {
+      delete rows[driverObj.idx]['0-10']
+      rows[driverObj.idx].zeroToTen60 = 1
+    } else {
+      delete rows[driverObj.idx]['0-10']
+      rows[driverObj.idx].zeroToTen96 = 1
+    }
+  }
+  return rows
 }
