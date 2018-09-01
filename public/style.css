@@ -257,13 +257,11 @@ form div {
 }
 
 .channeltbl-add-btn {
-  background-color: #dddddd;
-  border: white solid 1px;
-  color: black;
   width: 12.5%;
-  margin-right: 1px;
-  height: 2.5em;
-  color: #797979;
+  color: #1684c9;
+  text-decoration: underline;
+  cursor: pointer;
+  border: none;
 }
 
 .channeltbl-table-container {
