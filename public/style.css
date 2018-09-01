@@ -77,10 +77,10 @@ form div {
   background-color: #fff;
   border-radius: 3px;
   margin-right: 10%;
-  color: #0b5689;
+  color: #1684c9;
   font-size: 0.8em;
   font-weight: lighter;
-  border: 2px solid #0b5689;
+  border: 2px solid #1684c9;
 }
 
 /* DEFINE TYPE */
@@ -102,7 +102,7 @@ form div {
 }
 
 .fixtype-compress-icon {
-  color: #0b5689;
+  color: #1684c9;
   padding-top: 0.9em;
 }
 
@@ -156,8 +156,8 @@ form div {
   padding: 0.3em;
   width: 30%;
   margin-left: 35%;
-  font-weight: lighter;
-  color: #797979;
+  font-weight: normal;
+  color: #0b5689;
 }
 
 .fixtype-compressed {
@@ -279,7 +279,7 @@ form div {
 
 .channeltbl-deleterun-btn {
     border: none;
-    color: #0b5689;
+    color: #1684c9;
     font-size: 0.8em;
 }
 
@@ -296,8 +296,8 @@ form div {
 /* FINAL BUTTONS */
 
 .submit-quote-btn {
-  background-color: #0b5689;
-  border: 1px solid #0b5689;
+  background-color: #1684c9;
+  border: 1px solid #1684c9;
   height: 2.5em;
   color: white;
   margin: 1em 0.5em;
@@ -307,9 +307,9 @@ form div {
 }
 
 .download-btn {
-  border: 1px solid #0b5689;
+  border: 1px solid #1684c9;
   padding: 7px;
   font-size: 0.9em;
-  color: #0b5689;
+  color: #1684c9;
   border-radius: 3px;
 }
