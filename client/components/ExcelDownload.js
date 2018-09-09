@@ -54,6 +54,7 @@ const ExcelDownload = (props) => {
   ]
   return (
     <ExcelFile filename={`${props.job.jobName} - ${props.job.specifier}`} element={<button type='submit' className='download-btn'>Download Excel</button>}>
+      <ExcelSheet dataSet={summaryData} name='Summary' />
       {Object.keys(props.csvData).map((fixName, idx) =>
         <ExcelSheet key={fixName} data={props.csvData[fixName]} name={`${fixName}`}>
           <ExcelColumn label='Type' value='type' />
