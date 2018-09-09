@@ -10,7 +10,7 @@ class DefineRuns extends React.Component {
     return (
       <div>
         <h1 className='title'><strong>DEFINE RUNS</strong></h1>
-        <RunTable intensity={this.props.intensity} idx={this.props.idx} />
+        <button>Add Run</button>
       </div>
     )
   }
