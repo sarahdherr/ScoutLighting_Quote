@@ -401,3 +401,7 @@ form div {
   width: 2em;
   margin-left: 1em;
 }
+
+.runoutput-header {
+  text-decoration: underline;
+}

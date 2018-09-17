@@ -11,7 +11,8 @@ class DefineRuns extends React.Component {
     this.state = {
       open: false,
       showValues: false,
-      innerControl: DefineRunInitial
+      innerControl: DefineRunInitial,
+      runs: []
     }
     this.onOpenModal = this.onOpenModal.bind(this)
     this.onCloseModal = this.onCloseModal.bind(this)
@@ -29,12 +30,14 @@ class DefineRuns extends React.Component {
 
   onNext (val) {
     console.log('DefineRun', val)
-    this.setState(val)
-    this.setState({ innerControl: DefineRunStraightLength })
+    this.setState({currentRun: {...val}})
+    this.setState({innerControl: DefineRunStraightLength})
   }
 
   onComplete (val) {
-    this.setState({...val, showValues: true})
+    let newRun = {...this.state.currentRun, ...val}
+    let runs = this.state.runs.concat(newRun)
+    this.setState({innerControl: DefineRunInitial, currentRun: {}, showValues: true, runs})
     this.onCloseModal()
   }
 
@@ -48,12 +51,15 @@ class DefineRuns extends React.Component {
           {<this.state.innerControl onNext={this.onNext} onComplete={this.onComplete} />}
         </Modal>
         {
-          this.showValues
-          ? <div>
-            <p>Run type: {this.state.runType}</p>
-            <p>Length: {this.state.lengthFt} feet {this.state.lengthIn} inches</p>
-            <p>Quantity: {this.state.quantity}</p>
-          </div>
+          this.state.runs.length
+          ? this.state.runs.map((run, idx) =>
+            <div key={idx}>
+              <p className='runoutput-header'>Run {idx + 1}</p>
+              <p>Run type: {run.runType}</p>
+              <p>Length: {run.lengthFt}" {run.lengthIn}'</p>
+              <p>Quantity: {run.qty}</p>
+            </div>
+          )
           : null
         }
       </div>
