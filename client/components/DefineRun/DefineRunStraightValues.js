@@ -1,6 +1,6 @@
 import React from 'react'
 
-class DefineRunStraightLength extends React.Component {
+class DefineRunStraightValues extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -29,7 +29,7 @@ class DefineRunStraightLength extends React.Component {
   }
 
   onNext () {
-    if (!this.state.lengthFt || !this.state.lengthIn)
+    if (this.state.lengthFt + this.state.lengthIn === 0)
     {
       console.log('not so fast... (length)')
       this.setState({ valid: false, invalidMsg: 'Please enter numerical length before continueing' })
@@ -62,16 +62,16 @@ class DefineRunStraightLength extends React.Component {
         }
         <div >
           <div className='runmodal-input-container'>
+            <p className='runmodal-input-text' >Quantity:</p>
+            <input name='qty' className='' onChange={this.handleQty} value={this.state.qty} className='runmodal-input' />
+          </div>
+          <div className='runmodal-input-container'>
             <p className='runmodal-input-text'>Length (Ft):</p>
             <input name='length' className='' onChange={this.handleLengthFt} value={this.state.lengthFt} className='runmodal-input' />
           </div>
           <div className='runmodal-input-container'>
             <p className='runmodal-input-text'>Length (In):</p>
             <input name='length' className='' onChange={this.handleLengthIn} value={this.state.lengthIn} className='runmodal-input' />
-          </div>
-          <div className='runmodal-input-container'>
-            <p className='runmodal-input-text' >Quantity:</p>
-            <input name='qty' className='' onChange={this.handleQty} value={this.state.qty} className='runmodal-input' />
           </div>
         </div>
         <button onClick={this.onNext} type='submit' className='runmodal-next-btn'>Finish</button>
@@ -80,4 +80,4 @@ class DefineRunStraightLength extends React.Component {
   }
 }
 
-export default DefineRunStraightLength
+export default DefineRunStraightValues

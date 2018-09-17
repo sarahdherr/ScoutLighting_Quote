@@ -3,14 +3,14 @@ import {connect} from 'react-redux'
 import Modal from 'react-responsive-modal'
 
 import DefineRunInitial from '../components/DefineRun/DefineRunInitial'
-import DefineRunStraightLength from '../components/DefineRun/DefineRunStraightLength'
+import DefineRunStraightValues from '../components/DefineRun/DefineRunStraightValues'
+import DefinePatternValues from '../components/DefineRun/DefinePatternValues'
 
 class DefineRuns extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
       open: false,
-      showValues: false,
       innerControl: DefineRunInitial,
       runs: []
     }
@@ -25,19 +25,24 @@ class DefineRuns extends React.Component {
   }
 
   onCloseModal () {
-    this.setState({ open: false })
+    this.setState({ innerControl: DefineRunInitial, open: false, currentRun: {} })
   }
 
   onNext (val) {
     console.log('DefineRun', val)
-    this.setState({currentRun: {...val}})
-    this.setState({innerControl: DefineRunStraightLength})
+    this.setState({currentRun: {...val}}, () => {
+      if (this.state.currentRun.runType === 'Straight') {
+        this.setState({innerControl: DefineRunStraightValues})
+      } else {
+        this.setState({innerControl: DefinePatternValues})
+      }
+    })
   }
 
   onComplete (val) {
     let newRun = {...this.state.currentRun, ...val}
     let runs = this.state.runs.concat(newRun)
-    this.setState({innerControl: DefineRunInitial, currentRun: {}, showValues: true, runs})
+    this.setState({runs: runs})
     this.onCloseModal()
   }
 
@@ -55,9 +60,11 @@ class DefineRuns extends React.Component {
           ? this.state.runs.map((run, idx) =>
             <div key={idx}>
               <p className='runoutput-header'>Run {idx + 1}</p>
-              <p>Run type: {run.runType}</p>
-              <p>Length: {run.lengthFt}" {run.lengthIn}'</p>
-              <p>Quantity: {run.qty}</p>
+              <div className='runoutput-text-container'>
+                <p>Run type: {run.runType}</p>
+                <p>Quantity: {run.qty}</p>
+                <p>Length: {run.lengthFt}" {run.lengthIn}'</p>
+              </div>
             </div>
           )
           : null

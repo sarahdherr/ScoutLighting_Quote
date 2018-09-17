@@ -405,3 +405,9 @@ form div {
 .runoutput-header {
   text-decoration: underline;
 }
+
+.runoutput-text-container {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
