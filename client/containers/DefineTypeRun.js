@@ -93,7 +93,6 @@ const mapState = state => {
     fixtureName: getAllFixtureNames(state.fixture),
     fixtures: getAllFixtures(state.fixture),
     job: state.job,
-    runs: getAllRuns(state.run),
     csvData: state.csv
   }
 }
@@ -111,11 +110,6 @@ function getAllFixtureNames (fixtures) {
 function getAllFixtures (fixtures) {
   let keys = Object.keys(fixtures)
   return keys.map(key => fixtures[key])
-}
-
-function getAllRuns (runs) {
-  let keys = Object.keys(runs)
-  return keys.map(key => runs[key])
 }
 
 const mapDispatch = dispatch => {
