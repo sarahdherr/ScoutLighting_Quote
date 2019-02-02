@@ -58,7 +58,7 @@ const ExcelDownload = (props) => {
     let len = sum(fixture, 'length')
     let breakdown = sum(fixture, 'breakdown')
     let check = ''
-    let wtsFt = getValue(fixture, 'wattsPerFt')
+    let wtsFt = getValue(fixture, 'intensity')
     let wtsRn = sum(fixture, 'wattage')
     let plugin = sum(fixture, 'notSet')
     let ten30W = sum(fixture, 'zeroToTen30')
