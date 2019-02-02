@@ -8,15 +8,12 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn
 const ExcelDownload = (props) => {
   const job = props.job
   function sum (fixture, key) {
-    console.log('===== sum func =====')
-    console.log(fixture, key)
     let total = 0
     fixture.map(row => {
       if (typeof row[key] === 'number') {
         total += row[key]
       }
     })
-    console.log(total)
     return total
   }
   var fixNames = Object.keys(props.csvData)
@@ -58,7 +55,7 @@ const ExcelDownload = (props) => {
     let len = sum(fixture, 'length')
     let breakdown = sum(fixture, 'breakdown')
     let check = ''
-    let wtsFt = getValue(fixture, 'intensity')
+    let wtsFt = getValue(fixture, 'wattsPerFt')
     let wtsRn = sum(fixture, 'wattage')
     let plugin = sum(fixture, 'notSet')
     let ten30W = sum(fixture, 'zeroToTen30')
@@ -88,6 +85,8 @@ const ExcelDownload = (props) => {
     { columns: ['Job Info', ''],
       data: [
         ['Name', job.name],
+        ['Email', job.email],
+        ['Phone Number', job.phoneNumber],
         ['Company', job.company],
         ['Job', job.jobName],
         ['Location', job.location],

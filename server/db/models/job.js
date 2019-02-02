@@ -5,6 +5,12 @@ const Job = db.define('job', {
   name: {
     type: Sequelize.STRING
   },
+  email: {
+    type: Sequelize.STRING
+  },
+  phoneNumber: {
+    type: Sequelize.STRING
+  },
   type: {
     type: Sequelize.STRING
   },

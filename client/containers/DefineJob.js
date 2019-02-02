@@ -7,6 +7,8 @@ class DefineJob extends React.Component {
     super(props)
     this.state = {
       name: '',
+      email: '',
+      phoneNumber: '',
       company: '',
       jobName: '',
       location: '',
@@ -24,7 +26,7 @@ class DefineJob extends React.Component {
     this.setState(tempObj)
   }
 
-  onNextClick (evt) {
+  onNextClick (_) {
     this.props.handleClick(this.state)
     this.props.handleNext()
   }
@@ -36,6 +38,14 @@ class DefineJob extends React.Component {
         <div className='jobinfo-container'>
           <p className='jobinfo-item-label'>Name:</p>
           <input className='jobinfo-item-input' name='name' value={this.state.name} onChange={this.handleChange} />
+        </div>
+        <div className='jobinfo-container'>
+          <p className='jobinfo-item-label'>Email:</p>
+          <input className='jobinfo-item-input' name='email' value={this.state.email} onChange={this.handleChange} />
+        </div>
+        <div className='jobinfo-container'>
+          <p className='jobinfo-item-label'>Phone Number:</p>
+          <input className='jobinfo-item-input' name='phoneNumber' value={this.state.phoneNumber} onChange={this.handleChange} />
         </div>
         <div className='jobinfo-container'>
           <p className='jobinfo-item-label'>Company:</p>

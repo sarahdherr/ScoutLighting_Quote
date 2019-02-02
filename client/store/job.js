@@ -12,6 +12,8 @@ const GET_JOB = 'GET_JOB'
  */
 const defaultJob = {
   name: '',
+  email: '',
+  phoneNumber: '',
   location: '',
   company: '',
   specifier: '',
