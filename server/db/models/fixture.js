@@ -5,6 +5,9 @@ const Fixture = db.define('fixture', {
   fixtureName: {
     type: Sequelize.STRING
   },
+  fixtureLocation: {
+    type: Sequelize.STRING
+  },
   partNumber: {
     type: Sequelize.STRING
   },

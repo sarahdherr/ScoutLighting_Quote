@@ -5,6 +5,7 @@ import history from '../history'
  * ACTION TYPES
  */
 const STOCK_NAME = 'STOCK_NAME'
+const STOCK_LOCATION = 'STOCK_LOCATION'
 const STOCK_PREFIX = 'STOCK_PREFIX'
 const STOCK_CHANNEL = 'STOCK_CHANNEL'
 const STOCK_LENS = 'STOCK_LENS'
@@ -12,6 +13,7 @@ const STOCK_INTENSITY = 'STOCK_INTENSITY'
 const STOCK_CCT = 'STOCK_CCT'
 const STOCK_DIMMING = 'STOCK_DIMMING'
 const STOCK_COATING = 'STOCK_COATING'
+const STOCK_CUSTOMCOATING = 'STOCK_CUSTOMCOATING'
 const STOCK_ANOTHER_FIXTURE = 'STOCK_ANOTHER_FIXTURE'
 
 /**
@@ -19,6 +21,7 @@ const STOCK_ANOTHER_FIXTURE = 'STOCK_ANOTHER_FIXTURE'
  */
 const defaultFixture = {
   fixtureName: '',
+  fixtureLocation: '',
   prefix: 'SS',
   channel: '',
   lens: '',
@@ -26,6 +29,7 @@ const defaultFixture = {
   cct: '',
   dimming: '',
   powderCoating: '',
+  customCoating: '',
   partNumber: ''
 }
 
@@ -35,6 +39,7 @@ const defaultFixtures = {0: defaultFixture}
  * ACTION CREATORS
  */
 const stockName = (idx, fixtureName) => ({type: STOCK_NAME, idx, fixtureName})
+const stockLocation = (idx, fixtureLocation) => ({type: STOCK_LOCATION, idx, fixtureLocation})
 const stockPrefix = (idx, prefix) => ({type: STOCK_PREFIX, idx, prefix})
 const stockChannel = (idx, channel) => ({type: STOCK_CHANNEL, idx, channel})
 const stockLens = (idx, lens) => ({type: STOCK_LENS, idx, lens})
@@ -42,6 +47,7 @@ const stockIntensity = (idx, intensity) => ({type: STOCK_INTENSITY, idx, intensi
 const stockCct = (idx, cct) => ({type: STOCK_CCT, idx, cct})
 const stockDimming = (idx, dimming) => ({type: STOCK_DIMMING, idx, dimming})
 const stockCoating = (idx, coating) => ({type: STOCK_COATING, idx, coating})
+const stockCustomCoating = (idx, coating) => ({type: STOCK_CUSTOMCOATING, idx, coating})
 const stockAnotherFixture = (idx, fixture) => ({type: STOCK_ANOTHER_FIXTURE, idx, fixture})
 
 /**
@@ -51,6 +57,13 @@ const stockAnotherFixture = (idx, fixture) => ({type: STOCK_ANOTHER_FIXTURE, idx
 export const setName = (idx, fixtureName) => async dispatch => {
   try {
     dispatch(stockName(idx, fixtureName))
+  } catch (err) {
+    console.log(err)
+  }
+}
+export const setLocation = (idx, fixtureLocation) => async dispatch => {
+  try {
+    dispatch(stockLocation(idx, fixtureLocation))
   } catch (err) {
     console.log(err)
   }
@@ -111,6 +124,14 @@ export const setCoating = (idx, coating) => async dispatch => {
   }
 }
 
+export const setCustomCoating = (idx, coating) => async dispatch => {
+  try {
+    dispatch(stockCustomCoating(idx, coating))
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 export const saveFixture = (fixture) => async dispatch => {
   let res
   try {
@@ -125,6 +146,7 @@ export const addAnotherFixture = (idx) => async dispatch => {
   try {
     let fix = {
       fixtureName: '',
+      fixtureLocation: '',
       prefix: 'SS',
       channel: '',
       lens: '',
@@ -154,7 +176,7 @@ const calculatePartNumber = (fixture) => {
 /**
  * REDUCER
  */
-function getIdx(idx) {
+function getIdx (idx) {
   return idx
     ? idx
     : 0
@@ -165,6 +187,9 @@ export default function (state = defaultFixtures, action) {
   switch (action.type) {
     case STOCK_NAME:
       newState[getIdx(action.idx)].fixtureName = action.fixtureName
+      break
+    case STOCK_LOCATION:
+      newState[getIdx(action.idx)].fixtureLocation = action.fixtureLocation
       break
     case STOCK_PREFIX:
       newState[getIdx(action.idx)].prefix = action.prefix
@@ -183,6 +208,9 @@ export default function (state = defaultFixtures, action) {
       break
     case STOCK_COATING:
       newState[getIdx(action.idx)].powderCoating = action.coating
+      break
+    case STOCK_CUSTOMCOATING:
+      newState[getIdx(action.idx)].customCoating = action.coating
       break
     case STOCK_DIMMING:
       newState[getIdx(action.idx)].dimming = action.dimming

@@ -8,12 +8,15 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn
 const ExcelDownload = (props) => {
   const job = props.job
   function sum (fixture, key) {
+    console.log('===== sum func =====')
+    console.log(fixture, key)
     let total = 0
     fixture.map(row => {
       if (typeof row[key] === 'number') {
         total += row[key]
       }
     })
+    console.log(total)
     return total
   }
   var fixNames = Object.keys(props.csvData)
@@ -36,6 +39,51 @@ const ExcelDownload = (props) => {
     let mountingKit = sum(props.csvData[fixtureName], 'mountingKit')
     return [fixtureName, length, zeroTen30W, zeroTen60W, zeroTen96W, mlv, dmx, nonDim, twoFt, oneFt, oneIn, cornerL, cornerR, powerfeed, nonfeed, mountingKit]
   })
+  function getValue (fixture, key) {
+    let values = fixture.filter(row => {
+      return row[key]
+    })
+    return values.length
+      ? values[0][key]
+      : ''
+  }
+  var sumData2 = fixNames.map(fixtureName => {
+    let fixture = props.csvData[fixtureName]
+    let name = fixtureName
+    let location = getValue(fixture, 'location')
+    let partNum = getValue(fixture, 'partNum')
+    let cct = getValue(fixture, 'cct')
+    let ft = sum(fixture, 'lengthFt')
+    let inch = sum(fixture, 'lengthIn')
+    let len = sum(fixture, 'length')
+    let breakdown = sum(fixture, 'breakdown')
+    let check = ''
+    let wtsFt = getValue(fixture, 'wattsPerFt')
+    let wtsRn = sum(fixture, 'wattage')
+    let plugin = sum(fixture, 'notSet')
+    let ten30W = sum(fixture, 'zeroToTen30')
+    let ten60W = sum(fixture, 'zeroToTen60')
+    let ten96W = sum(fixture, 'zeroToTen96')
+    let mlv = sum(fixture, 'MLV')
+    let dmx = sum(fixture, 'DMX')
+    let noDim = sum(fixture, 'None')
+    let twoFt = sum(fixture, 'twoFt')
+    let oneFt = sum(fixture, 'oneFt')
+    let oneIn = sum(fixture, 'oneIn')
+    let powerfeed = sum(fixture, 'powerfeed')
+    let pucks = sum(fixture, 'pucks')
+    let nonFeed = sum(fixture, 'nonfeed')
+    let mountingKits = sum(fixture, 'mountingKit')
+    let sideFeed = sum(fixture, 'notSet')
+    let rearFeed = sum(fixture, 'notSet')
+    let cornerL = sum(fixture, 'notSet')
+    let cornerR = sum(fixture, 'notSet')
+    let jumpers = sum(fixture, 'notSet')
+    let optics = sum(fixture, 'optics')
+    let powderCoating = sum(fixture, 'powderCoating')
+
+    return [name, location, partNum, cct, ft, inch, len, breakdown, check, wtsFt, wtsRn, plugin, ten30W, ten60W, ten96W, mlv, dmx, noDim, twoFt, oneFt, oneIn, powerfeed, pucks, nonFeed, mountingKits, sideFeed, rearFeed, cornerL, cornerR, jumpers, optics, powderCoating]
+  })
   const summaryData = [
     { columns: ['Job Info', ''],
       data: [
@@ -47,9 +95,9 @@ const ExcelDownload = (props) => {
         ['Job Type', job.type]
       ]
     },
-    { ySteps: 3,
-      columns: ['Fixture', 'Length', '0-10 30W', '0-10 60W', '0-10 96W', 'MLV 96', 'DMX 96', 'Non Dim 96', '2 Foot', '1 Foot', '1 Inch', 'Corner Left', 'Corner Right', 'Powerfeed', 'Nonfeed', 'Mounting Kit'],
-      data: sumData
+    { ySteps: 4,
+      columns: ['Type', 'Location', 'Part #', 'CCT', 'Ft', 'In', 'Length', 'Breakdown', 'Check', 'W/FT', 'Run Watt', 'Plugin 24W', '0-10 30W',	'0-10 60W',	'0-10 96W',	'MLV 96',	'DMX 96',	'Non Dim 96', '2  Foot', '1 Foot', '1 Inch', 'Power Feed', 'Pucks', 'Non Feed', 'Mounting Kit', 'Side Feed', 'Rear Feed', 'Corner Left', 'Corner Right', 'Jumpers', 'Optics', 'Powder Coat'],
+      data: sumData2
     }
   ]
   return (
@@ -58,9 +106,17 @@ const ExcelDownload = (props) => {
       {Object.keys(props.csvData).map((fixName, idx) =>
         <ExcelSheet key={fixName} data={props.csvData[fixName]} name={`${fixName}`}>
           <ExcelColumn label='Type' value='type' />
+          <ExcelColumn label='Location' value='location' />
+          <ExcelColumn label='Part #' value='partNum' />
+          <ExcelColumn label='CCT' value='cct' />
+          <ExcelColumn label='Ft' value='lengthFt' />
+          <ExcelColumn label='Inches' value='lengthIn' />
           <ExcelColumn label='Length' value='length' />
-          <ExcelColumn label='Breakdown' value='breakdown' />
-          <ExcelColumn label='Wattage' value='wattage' />
+          <ExcelColumn label='Breakdown' value='roundedBreakdown' />
+          <ExcelColumn label='Check' value='notSet' />
+          <ExcelColumn label='W/FT' value='wattsPerFt' />
+          <ExcelColumn label='Run Watt' value='wattage' />
+          <ExcelColumn label='Plugin 24W' value='notSet' />
           <ExcelColumn label='0-10 30W' value='zeroToTen30' />
           <ExcelColumn label='0-10 60W' value='zeroToTen60' />
           <ExcelColumn label='0-10 96W' value='zeroToTen96' />
@@ -70,11 +126,17 @@ const ExcelDownload = (props) => {
           <ExcelColumn label='2 Foot' value='twoFt' />
           <ExcelColumn label='1 Foot' value='oneFt' />
           <ExcelColumn label='1 Inch' value='oneIn' />
-          <ExcelColumn label='Corner Left' value='cornerLeft' />
-          <ExcelColumn label='Corner Right' value='cornerRight' />
           <ExcelColumn label='Power Feed' value='powerfeed' />
+          <ExcelColumn label='Pucks' value='powerfeed' />
           <ExcelColumn label='Non Feed' value='nonfeed' />
           <ExcelColumn label='Mounting Kit' value='mountingKit' />
+          <ExcelColumn label='Side Feed' value='notSet' />
+          <ExcelColumn label='Rear Feed' value='notSet' />
+          <ExcelColumn label='Corner Left' value='notSet' />
+          <ExcelColumn label='Corner Right' value='notSet' />
+          <ExcelColumn label='Jumpers' value='notSet' />
+          <ExcelColumn label='Optics' value='optics' />
+          <ExcelColumn label='Powder Coat' value='powderCoating' />
         </ExcelSheet>)
       }
     </ExcelFile>

@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {setPrefix, setName, setChannel, setLens, setIntensity, setCct, setCoating, setDimming} from '../store'
+import {setPrefix, setName, setChannel, setLens, setIntensity, setCct, setCoating, setCustomCoating, setDimming, setLocation} from '../store'
 
 const DefineType = (props) => {
   return (
@@ -11,6 +11,10 @@ const DefineType = (props) => {
         <input className='fixtype-name-input fixtype-radio-input'
           onChange={(evt) => props.handleNameChange(props.idx, evt.target.value)}
           value={props.fixtureName} />
+        <p className='fixtype-name-label'>Fixture Location:</p>
+        <input className='fixtype-name-input fixtype-radio-input'
+          onChange={(evt) => props.handleLocationChange(props.idx, evt.target.value)}
+          value={props.fixtureLocation} />
       </div>
       <div className='fixtype-container'>
         <div className='fixtype-item-container'>
@@ -51,7 +55,7 @@ const DefineType = (props) => {
 
         <div className='fixtype-item-container'>
           <p className='fixtype-item-label'>Lens:</p>
-          {['FM - Flat Milky', 'FF - Flat Frosted'].map((lens, idx) =>
+          {['FM - Flat Milky', 'FF - Flat Frosted', 'G - Glazer Optics'].map((lens, idx) =>
             <div key={idx}>
               <label className='fixtype-radio-label'>
                 <input
@@ -127,6 +131,14 @@ const DefineType = (props) => {
               </label>
             </div>
           )}
+          {
+            props.powderCoating === 'Custom'
+              ? <input className='fixtype-name-input fixtype-radio-input'
+                  onChange={(evt) => props.handleCustomCoating(props.idx, evt.target.value)}
+                  value={props.customCoating}
+                  placeholder='hex color' />
+              : null
+          }
         </div>
 
         <div className='fixtype-item-container'>
@@ -158,12 +170,14 @@ const DefineType = (props) => {
 const mapState = (state, ownProps) => {
   return {
     fixtureName: state.fixture[ownProps.idx].fixtureName,
+    fixtureLocation: state.fixture[ownProps.idx].fixtureLocation,
     prefix: state.fixture[ownProps.idx].prefix,
     channel: state.fixture[ownProps.idx].channel,
     lens: state.fixture[ownProps.idx].lens,
     intensity: state.fixture[ownProps.idx].intensity,
     cct: state.fixture[ownProps.idx].cct,
     powderCoating: state.fixture[ownProps.idx].powderCoating,
+    customCoating: state.fixture[ownProps.idx].customCoating,
     dimming: state.fixture[ownProps.idx].dimming,
     partNumber: state.fixture[ownProps.idx].partNumber
   }
@@ -173,6 +187,9 @@ const mapDispatch = dispatch => {
   return {
     handleNameChange (idx, fixtureName) {
       dispatch(setName(idx, fixtureName))
+    },
+    handleLocationChange (idx, location) {
+      dispatch(setLocation(idx, location))
     },
     handlePrefix (idx, prefix) {
       dispatch(setPrefix(idx, prefix))
@@ -191,6 +208,9 @@ const mapDispatch = dispatch => {
     },
     handleCoating (idx, coating) {
       dispatch(setCoating(idx, coating))
+    },
+    handleCustomCoating (idx, customCoating) {
+      dispatch(setCustomCoating(idx, customCoating))
     },
     handleDimming (idx, dimming) {
       dispatch(setDimming(idx, dimming))

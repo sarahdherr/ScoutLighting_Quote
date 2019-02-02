@@ -17,8 +17,8 @@ const RunTable = (props) => {
               <th className='channeltbl-header-cell'>Length (inches)</th>
               <th className='channeltbl-header-cell'>Run Wattage</th>
               <th className='channeltbl-header-cell'>Total Wattage</th>
-              <th className='channeltbl-header-cell'>Field trimmable?</th>
-              <th className='channeltbl-header-cell'>Symmetrical?</th>
+              {/* <th className='channeltbl-header-cell'>Field trimmable?</th>
+              <th className='channeltbl-header-cell'>Symmetrical?</th> */}
             </tr>
           </thead>
           <tbody>

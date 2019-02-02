@@ -1,14 +1,14 @@
-export default function calculateCSV (run) {
-  console.log('******', run)
+export default function calculateCSV (run, fixture) {
+  // console.log('******', run)
   var csvRows = []
   for (let i = 0; i < run.quantity; i++) {
     var totalLength = run.lengthFt
-    var firstRow = calculateFirstRow(totalLength, run.type, run.wattsPerFt, run.dimmingType)
+    var firstRow = calculateFirstRow(totalLength, run.type, run.wattsPerFt, run.dimmingType, fixture)
     csvRows.push(firstRow)
     var leftOverFt = totalLength - firstRow.breakdown
     var leftOverWatts = 90 - firstRow.wattage
     while (leftOverFt) {
-      var nextRow = calculateNextRow(leftOverFt, run.wattsPerFt, leftOverWatts, run.dimmingType)
+      var nextRow = calculateNextRow(leftOverFt, run.wattsPerFt, leftOverWatts, run.dimmingType, fixture)
       csvRows.push(nextRow)
       leftOverFt -= nextRow.breakdown
       leftOverWatts = (leftOverWatts - nextRow.wattage) < 0 ? (leftOverWatts - nextRow.wattage) : 90
@@ -22,20 +22,30 @@ export default function calculateCSV (run) {
   return csvRows
 }
 
-function calculateFirstRow (totalLength, runType, wattsPerFt, dimmingType) {
+function calculateFirstRow (totalLength, runType, wattsPerFt, dimmingType, fixture) {
+  var inches = Math.floor(totalLength * 12)
+  var feet = Math.floor(inches / 12)
   var firstRow = {
     type: runType,
-    length: totalLength
+    length: round(totalLength),
+    lengthFt: feet,
+    lengthIn: inches - (feet * 12)
   }
-  firstRow = doCalculations(firstRow, totalLength, wattsPerFt)
+  firstRow = doCalculations(firstRow, totalLength, wattsPerFt, fixture)
   firstRow.powerfeed = 1
   firstRow[dimmingType] = 1
+  firstRow.location = fixture.fixtureLocation
   return firstRow
 }
 
-function calculateNextRow (totalLength, wattsPerFt, wattsLeft, dimmingType) {
+function round (num) {
+  var biggerNum = Math.round(num * 100)
+  return biggerNum / 100
+}
+
+function calculateNextRow (totalLength, wattsPerFt, wattsLeft, dimmingType, fixture) {
   var nextRow = {}
-  nextRow = doCalculations(nextRow, totalLength, wattsPerFt)
+  nextRow = doCalculations(nextRow, totalLength, wattsPerFt, fixture)
   nextRow.powerfeed = 0
   if (wattsLeft - nextRow.wattage < 0) {
     nextRow[dimmingType] = 1
@@ -43,22 +53,37 @@ function calculateNextRow (totalLength, wattsPerFt, wattsLeft, dimmingType) {
   return nextRow
 }
 
-function doCalculations (rowObj, totalLength, wattsPerFt) {
+function doCalculations (rowObj, totalLength, wattsPerFt, fixture) {
   var breakdown = (totalLength - 6 > 0) ? 6 : totalLength
   rowObj.breakdown = breakdown
-  rowObj.wattage = rowObj.breakdown * wattsPerFt
+  rowObj.roundedBreakdown = round(breakdown)
+  rowObj.wattage = round(rowObj.breakdown * wattsPerFt)
   rowObj.twoFt = Math.floor(rowObj.breakdown / 2)
-  rowObj.oneFt = Math.floor(rowObj.breakdown - (rowObj.twoFt * 2))
-  var leftOver = rowObj.breakdown - (rowObj.twoFt * 2) - rowObj.oneFt
-  rowObj.oneIn = leftOver * 12
+  rowObj.oneFt = Math.ceil(rowObj.breakdown - (rowObj.twoFt * 2))
+  // var leftOver = rowObj.breakdown - (rowObj.twoFt * 2) - rowObj.oneFt
+  // rowObj.oneIn = leftOver * 12
   rowObj.cornerLeft = 0
   rowObj.cornerRight = 0
   rowObj.nonfeed = (totalLength - rowObj.breakdown === 0) ? 1 : 0
   rowObj.mountingKit = 1
+  rowObj.wattsPerFt = fixture.intensity * 1
+  rowObj.partNum = fixture.partNumber
+  rowObj.cct = cutCCT(fixture.cct)
+  if (fixture.powderCoating !== 'None') {
+    rowObj.powderCoating = (rowObj.twoFt * 2) + rowObj.oneFt
+  }
+  if (fixture.lens === 'G - Glazer Optics') {
+    rowObj.optics = (rowObj.twoFt * 2) + rowObj.oneFt
+  }
   return rowObj
 }
 
-function update0to10Drivers(rows) {
+function cutCCT (cct) {
+  var cctArr = cct.split('-')
+  return cctArr[1].trim()
+}
+
+function update0to10Drivers (rows) {
   let driverObjs = []
   for (let i = 0; i < rows.length; i++) {
     let row = rows[i]
